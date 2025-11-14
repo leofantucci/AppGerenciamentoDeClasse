@@ -7,5 +7,5 @@ Contém as seguintes funções:
   - Consultar Aluno (Abre uma janela onde o usuário pode escolher consultar o aluno através da matrícula ou do nome);
 
 GC = Gamers Club7
-↓
+↦
 https://www.youtube.com/watch?v=esSzDrHYlTY
