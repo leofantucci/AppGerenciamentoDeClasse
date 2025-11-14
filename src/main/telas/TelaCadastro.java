@@ -102,7 +102,7 @@ public class TelaCadastro extends JFrame {
         mainPanel.add(contentPanel, BorderLayout.CENTER);
         
         switch(key) {
-        case 0: //Adicionar Aluno
+        case 0:
         	JLabel lblMatricula = new JLabel("Matrícula");
             lblMatricula.setBounds(30, 30, 200, 25);
             lblMatricula.setFont(new Font("Tahoma", Font.BOLD, 24));
@@ -182,7 +182,7 @@ public class TelaCadastro extends JFrame {
             break;
             
 
-        case 1: //Tabela de Alunos
+        case 1:
         	setBounds(750/2,(larguraTela-750)/2-300,750, 750);
             larguraTela = (int) tela.getWidth();
         	lblTitulo = new JLabel("TABELA DE ALUNOS");
@@ -272,7 +272,7 @@ public class TelaCadastro extends JFrame {
     		});
     		break;
     		
-        case 2: //Consultar Aluno        	
+        case 2:     	
         	contentPanel.setLayout(null);
         	contentPanel.removeAll();
         	lblTitulo.setText("CONSULTA DE ALUNO");
@@ -376,62 +376,69 @@ public class TelaCadastro extends JFrame {
         	btnPesquisaBusca.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
     	        	if(validaTextField(txtBusca, "Busca")) {
-    	        		if(keyBusca == 0) {
-    	        			for(Aluno a : turma.getAlunos()) {
-    	        				if(a.getMatricula() == Integer.parseInt((txtBusca.getText().trim()))) {
-    	        					lblErroBusca.setVisible(false);
-    	        					encontradoBusca = 1;
-    	        					lblMatriculaBusca.setText("Matrícula: " + a.getMatricula());
-    	        					lblNomeBusca.setText("Nome: " + a.getNome());
-    	        					lblNota1Busca.setText("Nota 1: " + a.getNota1());
-    	        					lblNota2Busca.setText("Nota 2: " + a.getNota2());
-    	        					lblMediaBusca.setText("Média: " + Double.toString(a.calcularMedia()));
-    	        					lblMatriculaBusca.setVisible(true);
-    	        					lblNomeBusca.setVisible(true);
-    	        					lblNota1Busca.setVisible(true);
-    	        					lblNota2Busca.setVisible(true);
-    	        					lblMediaBusca.setVisible(true);
-    	        				} else {
-    	        					encontradoBusca = 0;
-    	        				}
-    	        			}
-    	        			if(encontradoBusca == 0) {
-    	        				lblErroBusca.setVisible(true);
-    	        				lblMatriculaBusca.setVisible(false);
-	        					lblNomeBusca.setVisible(false);
-	        					lblNota1Busca.setVisible(false);
-	        					lblNota2Busca.setVisible(false);
-	        					lblMediaBusca.setVisible(false);    	        			
-	        				}
-    	        		}
-    	        		if(keyBusca == 1) {
-    	        			for(Aluno a : turma.getAlunos()) {
-    	        				if(a.getNome().toLowerCase().equals(txtBusca.getText().toLowerCase().trim())) {
-    	        					lblErroBusca.setVisible(false);
-    	        					encontradoBusca = 1;
-    	        					lblMatriculaBusca.setText("Matrícula >> " + a.getMatricula());
-    	        					lblNomeBusca.setText("Nome: " + a.getNome());
-    	        					lblNota1Busca.setText("Nota 1: " + a.getNota1());
-    	        					lblNota2Busca.setText("Nota 2: " + a.getNota2());
-    	        					lblMediaBusca.setText("Média: " + Double.toString(a.calcularMedia()));
-    	        					lblMatriculaBusca.setVisible(true);
-    	        					lblNomeBusca.setVisible(true);
-    	        					lblNota1Busca.setVisible(true);
-    	        					lblNota2Busca.setVisible(true);
-    	        					lblMediaBusca.setVisible(true);
-    	        				} else {
-    	        					encontradoBusca = 0;
-    	        				}
-    	        			}
-    	        			if(encontradoBusca == 0) {
-    	        				lblErroBusca.setVisible(true);
-    	        				lblMatriculaBusca.setVisible(false);
-	        					lblNomeBusca.setVisible(false);
-	        					lblNota1Busca.setVisible(false);
-	        					lblNota2Busca.setVisible(false);
-	        					lblMediaBusca.setVisible(false);
-    	        			}
-    	        		}
+    	        		
+    	        		encontradoBusca = 0; 
+    	                lblErroBusca.setVisible(false); 
+
+    	                if (keyBusca == 0) { 
+    	                    try {
+    	                        int matriculaBuscada = Integer.parseInt(txtBusca.getText().trim());
+    	                        
+    	                        for (Aluno a : turma.getAlunos()) {
+    	                            if (a.getMatricula() == matriculaBuscada) {
+    	                                encontradoBusca = 1;
+    	                                
+    	                                lblMatriculaBusca.setText("Matrícula: " + a.getMatricula());
+    	                                lblNomeBusca.setText("Nome: " + a.getNome());
+    	                                lblNota1Busca.setText("Nota 1: " + a.getNota1());
+    	                                lblNota2Busca.setText("Nota 2: " + a.getNota2());
+    	                                lblMediaBusca.setText("Média: " + Double.toString(a.calcularMedia()));
+    	                                
+    	                                lblMatriculaBusca.setVisible(true);
+    	                                lblNomeBusca.setVisible(true);
+    	                                lblNota1Busca.setVisible(true);
+    	                                lblNota2Busca.setVisible(true);
+    	                                lblMediaBusca.setVisible(true);
+    	                                
+    	                                break; 
+    	                            }
+    	                        }
+    	                    } catch (NumberFormatException ex) {
+    	                        JOptionPane.showMessageDialog(null, "Por favor, insira um número válido para a matrícula.", "Erro", JOptionPane.ERROR_MESSAGE);
+    	                    }
+
+    	                } else if (keyBusca == 1) { 
+    	                    String nomeBuscado = txtBusca.getText().toLowerCase().trim();
+    	                    
+    	                    for (Aluno a : turma.getAlunos()) {
+    	                        if (a.getNome().toLowerCase().equals(nomeBuscado)) {
+    	                            encontradoBusca = 1;
+    	                            
+    	                            lblMatriculaBusca.setText("Matrícula >> " + a.getMatricula());
+    	                            lblNomeBusca.setText("Nome: " + a.getNome());
+    	                            lblNota1Busca.setText("Nota 1: " + a.getNota1());
+    	                            lblNota2Busca.setText("Nota 2: " + a.getNota2());
+    	                            lblMediaBusca.setText("Média: " + Double.toString(a.calcularMedia()));
+    	                            
+    	                            lblMatriculaBusca.setVisible(true);
+    	                            lblNomeBusca.setVisible(true);
+    	                            lblNota1Busca.setVisible(true);
+    	                            lblNota2Busca.setVisible(true);
+    	                            lblMediaBusca.setVisible(true);
+    	                            
+    	                            break; 
+    	                        }
+    	                    }
+    	                }
+
+    	                if (encontradoBusca == 0) {
+    	                    lblErroBusca.setVisible(true);
+    	                    lblMatriculaBusca.setVisible(false);
+    	                    lblNomeBusca.setVisible(false);
+    	                    lblNota1Busca.setVisible(false);
+    	                    lblNota2Busca.setVisible(false);
+    	                    lblMediaBusca.setVisible(false);
+    	                }
     	        	}
     			}
     		});	
