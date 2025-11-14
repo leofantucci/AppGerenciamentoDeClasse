@@ -41,6 +41,14 @@ public class Turma {
 		return alunos;
 	}
 	
+public ArrayList<String> getAlunosNome(){
+	ArrayList<String> ret = new ArrayList<String>();
+	for(Aluno a : alunos) {
+		ret.add(a.getNome());
+	}
+	return ret;
+	}
+	
 	public void consultarAluno(int matricula) {
 		boolean tem = false;
 		for(Aluno a : alunos) {

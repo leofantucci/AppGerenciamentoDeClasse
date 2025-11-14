@@ -154,11 +154,15 @@ public class TelaCadastro extends JFrame {
             btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 22));
             btnCadastrar.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
-    				if(validaTextField(txtNome, "Nome") && validaTextField(txtNota1, "Nota 1") && validaTextField(txtNota2, "Nota2")) {
-    					System.out.println("CADASTRANDO");
-    					cadastrarAluno();
-    					}
-    				}	
+    				if(turma.getAlunosNome().contains(txtNome.getText().trim().toLowerCase())) {
+    					JOptionPane.showMessageDialog(null, "Erro! Já existe um aluno com esse nome", "Erro", JOptionPane.ERROR_MESSAGE);
+    				} else {
+    					if(validaTextField(txtNome, "Nome") && validaTextField(txtNota1, "Nota 1") && validaTextField(txtNota2, "Nota2")) {
+        					System.out.println("CADASTRANDO");
+        					cadastrarAluno();
+        				}
+    				}
+    			}	
     		});        
             
             JButton btnCancelar = new JButton("Cancelar");
@@ -368,7 +372,6 @@ public class TelaCadastro extends JFrame {
 			lblErroBusca.setVisible(false);
 			lblErroBusca.setFont(new Font("Tahoma", Font.BOLD, 22));
         	panelBusca.add(lblErroBusca);
-
         	
         	btnPesquisaBusca.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
@@ -378,7 +381,7 @@ public class TelaCadastro extends JFrame {
     	        				if(a.getMatricula() == Integer.parseInt((txtBusca.getText().trim()))) {
     	        					lblErroBusca.setVisible(false);
     	        					encontradoBusca = 1;
-    	        					lblMatriculaBusca.setText("Matrícula >> " + a.getMatricula());
+    	        					lblMatriculaBusca.setText("Matrícula: " + a.getMatricula());
     	        					lblNomeBusca.setText("Nome: " + a.getNome());
     	        					lblNota1Busca.setText("Nota 1: " + a.getNota1());
     	        					lblNota2Busca.setText("Nota 2: " + a.getNota2());
@@ -403,7 +406,7 @@ public class TelaCadastro extends JFrame {
     	        		}
     	        		if(keyBusca == 1) {
     	        			for(Aluno a : turma.getAlunos()) {
-    	        				if(a.getNome().equals(txtBusca.getText().trim())) {
+    	        				if(a.getNome().toLowerCase().equals(txtBusca.getText().toLowerCase().trim())) {
     	        					lblErroBusca.setVisible(false);
     	        					encontradoBusca = 1;
     	        					lblMatriculaBusca.setText("Matrícula >> " + a.getMatricula());
@@ -454,7 +457,7 @@ public class TelaCadastro extends JFrame {
     public void cadastrarAluno() {
 		Aluno a = new Aluno();
 	    a.setMatricula(Integer.parseInt(txtMatricula.getText().trim()));
-	    a.setNome(txtNome.getText().trim());
+	    a.setNome(txtNome.getText().trim().toLowerCase());
 	    a.setNota1(Double.parseDouble(txtNota1.getText().trim()));
 	    a.setNota2(Double.parseDouble(txtNota2.getText().trim()));
 		System.out.println("Pessoa adicionada!");
